@@ -1,0 +1,24 @@
+{
+  "name": "hubot-pubsub",
+  "version": "0.0.1",
+  "description": "PubSub notification system for Hubot",
+  "main": "pubsub.coffee",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spajus/hubot-pubsub.git"
+  },
+  "keywords": [
+    "hubot",
+    "pubsub",
+    "notifications",
+    "monitoring"
+  ],
+  "author": "Tomas Varaneckas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spajus/hubot-pubsub/issues"
+  }
+}
