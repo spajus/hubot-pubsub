@@ -2,10 +2,16 @@
   "name": "hubot-pubsub",
   "version": "0.0.1",
   "description": "PubSub notification system for Hubot",
-  "main": "pubsub.coffee",
-  "scripts": {
-    "test": "mocha"
+  "main": "lib/pubsub",
+  "devDependencies": {
+    "jasmine-node"   :  ">= 1.11.0",
+    "hubot-mock-adapter": ">= 1.0.0",
+    "hubot": ">= 2.5.6"
   },
+  "scripts": {
+    "test": "node_modules/.bin/jasmine-node --coffee --color spec/"
+  },
+  "homepage": "https://github.com/spajus/hubot-pubsub",
   "repository": {
     "type": "git",
     "url": "git://github.com/spajus/hubot-pubsub.git"
@@ -16,7 +22,7 @@
     "notifications",
     "monitoring"
   ],
-  "author": "Tomas Varaneckas",
+  "author": "Tomas Varaneckas <tomas.varaneckas@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/spajus/hubot-pubsub/issues"
