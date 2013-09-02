@@ -31,6 +31,13 @@ describe 'pubsub', ->
   afterEach ->
     robot.shutdown()
 
+  it 'lists current room subscriptions', (done) ->
+    adapter.on 'send', (envelope, strings) ->
+      (expect strings[0]).toMatch 'Total subscriptions for #jasmine: 0'
+      done()
+
+    adapter.receive new messages.TextMessage(user, 'hubot subscriptions')
+
   it 'lists all subscriptions', (done) ->
     adapter.on 'send', (envelope, strings) ->
       (expect strings[0]).toMatch 'Total subscriptions: 0'
