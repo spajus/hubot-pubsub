@@ -53,7 +53,7 @@ module.exports = (robot) ->
   robot.respond /subscribe ([a-z0-9\-\.\:]+)$/i, (msg) ->
     ev = msg.match[1]
     subscriptions(ev).push msg.message.user.room
-    persist subscriptions
+    persist subscriptions()
     msg.send "Subscribed #{msg.message.user.room} to #{ev} events"
 
   robot.respond /unsubscribe ([a-z0-9\-\.\:]+)$/i, (msg) ->

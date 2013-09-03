@@ -8,6 +8,20 @@ describe 'pubsub', ->
   adapter = null
   user = null
 
+  say = (msg) ->
+    adapter.receive new messages.TextMessage(user, msg)
+
+  expectHubotToSay = (msg, done) ->
+    adapter.on 'send', (envelope, strings) ->
+      (expect strings[0]).toMatch msg
+      done()
+
+  captureHubotOutput = (captured, done) ->
+    adapter.on 'send', (envelope, strings) ->
+      unless strings[0] in captured
+        captured.push strings[0]
+        done()
+
   beforeEach ->
     ready = false
 
@@ -31,16 +45,53 @@ describe 'pubsub', ->
   afterEach ->
     robot.shutdown()
 
-  it 'lists current room subscriptions', (done) ->
-    adapter.on 'send', (envelope, strings) ->
-      (expect strings[0]).toMatch 'Total subscriptions for #jasmine: 0'
-      done()
+  it 'lists current room subscriptions when none are present', (done) ->
+    expectHubotToSay 'Total subscriptions for #jasmine: 0', done
+    say 'hubot subscriptions'
 
-    adapter.receive new messages.TextMessage(user, 'hubot subscriptions')
+  it 'lists current room subscriptions', (done) ->
+    robot.brain.data.subscriptions =
+      'foo.bar': [ '#jasmine', '#other' ]
+      'baz': [ '#foo', '#jasmine' ]
+
+    count = 0
+    captured = []
+
+    doneLatch = ->
+      count += 1
+      if count == 3
+        (expect 'foo.bar -> #jasmine' in captured).toBeTruthy()
+        (expect 'baz -> #jasmine' in captured).toBeTruthy()
+        (expect 'Total subscriptions for #jasmine: 2' in captured).toBeTruthy()
+        done()
+
+    captureHubotOutput captured, doneLatch
+    captureHubotOutput captured, doneLatch
+    captureHubotOutput captured, doneLatch
+
+    say 'hubot subscriptions'
 
   it 'lists all subscriptions', (done) ->
-    adapter.on 'send', (envelope, strings) ->
-      (expect strings[0]).toMatch 'Total subscriptions: 0'
+    expectHubotToSay 'Total subscriptions: 0', done
+    say 'hubot all subscriptions'
+
+  it 'subscribes a room', (done) ->
+    expectHubotToSay 'Subscribed #jasmine to foo.bar events', ->
+      (expect robot.brain.data.subscriptions['foo.bar']).toEqual [ '#jasmine' ]
       done()
 
-    adapter.receive new messages.TextMessage(user, 'hubot all subscriptions')
+    say 'hubot subscribe foo.bar'
+
+  it 'cannot unsubscribe a room which was not subscribed', (done) ->
+    expectHubotToSay '#jasmine was not subscribed to foo.bar events', done
+    say 'hubot unsubscribe foo.bar'
+
+  it 'unsubscribes a room', (done) ->
+    robot.brain.data.subscriptions = 'foo.bar': [ '#jasmine' ]
+
+    expectHubotToSay 'Unsubscribed #jasmine from foo.bar events', ->
+      (expect robot.brain.data.subscriptions['foo.bar']).toEqual [ ]
+      done()
+
+    say 'hubot unsubscribe foo.bar'
+
