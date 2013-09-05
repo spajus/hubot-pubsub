@@ -7,6 +7,12 @@ PubSub notification system for [Hubot](https://github.com/github/hubot)
 
 ![hubot-pubsub demo](https://dl.dropboxusercontent.com/u/176100/opensource/hubot-pubsub.gif)
 
+## Possibilities
+
+`hubot-pubsub` allows you to build a simple, yet powerful monitoring / notification system using your corporate chat 
+(Campfire, HipChat, IRC, Jabber / XMPP or even Skype). Simply subscribe events in appropriate chat rooms and publish 
+info about these events via HTTP calls when they happen.
+
 ## Configuration
   
     HUBOT_SUBSCRIPTIONS_PASSWORD   # Optional password for protecting HTTP API calls
