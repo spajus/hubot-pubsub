@@ -21,14 +21,14 @@ Add dependency to Hubot's `package.json`:
   ...
   "dependencies": {
     ...
-    "hubot-pubsub": "git://github.com/hubot-scripts/hubot-example.git#master"
+    "hubot-pubsub": "git://github.com/spajus/hubot-pubsub.git#master"
   }
 }
 ```
 
 Include package in Hubot's `external-scripts.json`:
 ```json
-["hubot-example"]
+["hubot-pubsub"]
 ```
 
 ## Configuration
