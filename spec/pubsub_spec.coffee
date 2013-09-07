@@ -32,7 +32,7 @@ describe 'pubsub', ->
         process.env.HUBOT_AUTH_ADMIN = '1'
         robot.loadFile (path.resolve path.join 'node_modules/hubot/src/scripts'), 'auth.coffee'
 
-        (require '../lib/pubsub')(robot)
+        (require '../src/pubsub')(robot)
 
         user = robot.brain.userForId('1', name: 'jasmine', room: '#jasmine')
         adapter = robot.adapter
