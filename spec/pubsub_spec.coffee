@@ -95,3 +95,19 @@ describe 'pubsub', ->
 
     say 'hubot unsubscribe foo.bar'
 
+  it 'allows subscribing all unsubscribed events for debugging', (done) ->
+    robot.brain.data.subscriptions = 'unsubscribed.event': [ '#jasmine' ]
+
+    count = 0
+    captured = []
+
+    doneLatch = ->
+      count += 1
+      if count == 2
+        (expect 'unsubscribed.event: unrouted: no one should receive it' in captured).toBeTruthy()
+        (expect 'Notified 0 rooms about unrouted' in captured).toBeTruthy()
+        done()
+
+    captureHubotOutput captured, doneLatch
+
+    say 'hubot publish unrouted no one should receive it'

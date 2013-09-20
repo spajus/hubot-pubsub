@@ -10,7 +10,7 @@
 #   HUBOT_SUBSCRIPTIONS_PASSWORD (optional)
 #
 # Commands:
-#   hubot subscribe <event> - subscribes current room to event
+#   hubot subscribe <event> - subscribes current room to event. To debug, subscribe to 'unsubscribed.event'
 #   hubot unsubscribe <event> - unsubscribes current room from event
 #   hubot unsubscribe all events - unsubscribes current room from all events
 #   hubot subscriptions - show subscriptions of current room
@@ -44,6 +44,12 @@ module.exports = (robot) ->
         user = {}
         user.room = room
         robot.send user, "#{event}: #{data}"
+    unless count > 0
+      console.log "hubot-pubsub: unsubscribed.event: #{event}: #{data}"
+      for room in subscriptions('unsubscribed.event')
+        user = {}
+        user.room = room
+        robot.send user, "unsubscribed.event: #{event}: #{data}"
     count
 
   persist = (subscriptions) ->
