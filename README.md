@@ -58,6 +58,9 @@ Include package in Hubot's `external-scripts.json`:
   - Content-Type: `application/json`
   - Body: `{ "password": "optional", "event": "event", "data": "text" }`
 
+### Handling unsubscribed events
+
+Do `hubot subscribe unsubscribed.event` in a room where you want all unrouted events to get announced.
 
 ### Issues
 
