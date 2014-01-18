@@ -29,17 +29,29 @@ module.exports = (robot) ->
   url = require('url')
   querystring = require('querystring')
 
-  subscriptions = (ev) ->
+  subscriptions = (ev, partial = false) ->
     subs = robot.brain.data.subscriptions ||= {}
     if ev
-      subs[ev] ||= []
+      if '.' in ev and partial
+        matched = []
+        ev_parts = ev.split('.')
+        while ev_parts.length > 0
+          sub_ev = ev_parts.join('.')
+          if subs[sub_ev]
+            for e in subs[sub_ev]
+              matched.push e unless e in matched
+          ev_parts.pop()
+        matched
+      else
+        subs[ev] ||= []
     else
       subs
 
   notify = (event, data) ->
     count = 0
-    if event && subscriptions(event)
-      for room in subscriptions(event)
+    subs = subscriptions(event, true)
+    if event && subs
+      for room in subs
         count += 1
         user = {}
         user.room = room
