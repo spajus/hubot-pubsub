@@ -56,7 +56,7 @@ Include package in Hubot's `external-scripts.json`:
 
 ### Event Namespaces
 
-Hubot PubSub uses '.' as event namespace separator. I.e.: subscribing to `x.y` also subscribes to `x.y.*` events.
+Hubot PubSub uses `.` as event namespace separator. I.e.: subscribing to `x.y` also subscribes to `x.y.*` events.
 
 ### Handling unsubscribed events
 

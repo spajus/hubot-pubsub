@@ -1,6 +1,6 @@
 {
   "name": "hubot-pubsub",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "PubSub notification system for Hubot",
   "author": "Tomas Varaneckas <tomas.varaneckas@gmail.com>",
   "license": "MIT",
