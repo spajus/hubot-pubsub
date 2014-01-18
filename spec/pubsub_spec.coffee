@@ -111,3 +111,18 @@ describe 'pubsub', ->
     captureHubotOutput captured, doneLatch
 
     say 'hubot publish unrouted no one should receive it'
+
+  it 'allows subscribing to namespaces', (done) ->
+    robot.brain.data.subscriptions = 'errors.critical': [ '#jasmine' ]
+
+    count = 0
+    captured = []
+
+    doneLatch = ->
+      (expect 'errors.critical.subsystem: blew up!' in captured).toBeTruthy()
+      done()
+
+    captureHubotOutput captured, doneLatch
+
+    say 'hubot publish errors.critical.subsystem blew up!'
+

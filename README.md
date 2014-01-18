@@ -15,18 +15,14 @@ info about these events via HTTP calls when they happen.
 
 ## Installing
 
-Add dependency to Hubot's `package.json`:
-```json
-{
-  ...
-  "dependencies": {
-    ...
-    "hubot-pubsub": "git://github.com/spajus/hubot-pubsub.git#master"
-  }
-}
+Add dependency to `package.json`:
+
+```console
+$ npm install --save hubot-pubsub
 ```
 
 Include package in Hubot's `external-scripts.json`:
+
 ```json
 ["hubot-pubsub"]
 ```
@@ -57,6 +53,10 @@ Include package in Hubot's `external-scripts.json`:
 
   - Content-Type: `application/json`
   - Body: `{ "password": "optional", "event": "event", "data": "text" }`
+
+### Event Namespaces
+
+Hubot PubSub uses '.' as event namespace separator. I.e.: subscribing to `x.y` also subscribes to `x.y.*` events.
 
 ### Handling unsubscribed events
 
