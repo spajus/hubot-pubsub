@@ -126,3 +126,18 @@ describe 'pubsub', ->
 
     say 'hubot publish errors.critical.subsystem blew up!'
 
+  it 'handles pubsub:publish event', (done) ->
+    robot.brain.data.subscriptions = 'alien.event': [ '#jasmine' ]
+
+    count = 0
+    captured = []
+
+    doneLatch = ->
+      (expect 'alien.event: hi from other script' in captured).toBeTruthy()
+      done()
+
+    captureHubotOutput captured, doneLatch
+
+    robot.emit 'pubsub:publish', 'alien.event', 'hi from other script'
+
+
