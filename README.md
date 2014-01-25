@@ -11,7 +11,39 @@ PubSub notification system for [Hubot](https://github.com/github/hubot)
 
 `hubot-pubsub` allows you to build a simple, yet powerful monitoring / notification system using your corporate chat
 (Campfire, HipChat, IRC, Jabber / XMPP or even Skype). Simply subscribe events in appropriate chat rooms and publish
-info about these events via HTTP calls when they happen.
+info about these events via HTTP calls or from other Hubot scripts when they happen.
+
+
+```
+             Hubot PubSub Event Flow
+
++--------------+ +--------------+ +---------------+
+|              | |              | |               |
+| hubot script | | HTTP Request | | chat message  |<-+
+|              | |              | |               |  |
++-------+------+ +-------+------+ +-------+-------+  |
+        |                |                |          |
+        |                v                |          |
+        |        +--------------+         |          |
+        |        |              |         |          |
+        +------->| hubot-pubsub |<--------+          |
+                 |              |                    |
+                 +-------+------+                    |
+                         |                           |
+                         v                           |
+                 +--------------+                    |
+                 |              |                    |
+             +---+     hubot    +---+                |
+             |   |              |   |                |
+             |   +--------------+   |                |
+             |                      |                |
+             v                      v                |
+       +---------------+  +---------------+          |
+       |               |  |               |          |
+       |  chatroom #1  |  |  chatroom #2  +----------+
+       |               |  |               |
+       +---------------+  +---------------+
+````
 
 ## Installing
 
