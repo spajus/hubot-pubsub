@@ -21,6 +21,9 @@
 #   GET /publish?event=<event>&data=<text>[&password=<password>]
 #   POST /publish (Content-Type: application/json, {"password": "optional", "event": "event", "data": "text" })
 #
+# Events:
+#   pubsub:publish <event> <data> - publishes an event from another script
+#
 # Author:
 #   spajus
 
@@ -130,4 +133,9 @@ module.exports = (robot) ->
     data = req.body
     return unless data.password == process.env.HUBOT_SUBSCRIPTIONS_PASSWORD
     notify(data.event, data.data)
+
+  robot.on "pubsub:publish", (event, data) ->
+    unless event or data
+      console.log "Received incomplete pubsub:publish event. Event type: #{event}, data: #{data}"
+    notify(event, data)
 

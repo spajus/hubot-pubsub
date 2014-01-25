@@ -58,6 +58,12 @@ Include package in Hubot's `external-scripts.json`:
 
 Hubot PubSub uses `.` as event namespace separator. I.e.: subscribing to `x.y` also subscribes to `x.y.*` events.
 
+### Publishing events from other scripts
+
+Emit `pubsub:publish` event from any other Hubot script to publish something via hubot-pubsub:
+
+    robot.emit 'pubsub:publish', 'news', 'Publishing some news from another script'
+
 ### Handling unsubscribed events
 
 Do `hubot subscribe unsubscribed.event` in a room where you want all unrouted events to get announced.
