@@ -7,6 +7,10 @@ PubSub notification system for [Hubot](https://github.com/github/hubot)
 
 ![hubot-pubsub demo](https://dl.dropboxusercontent.com/u/176100/opensource/hubot-pubsub.gif)
 
+## Book: Automation and Monitoring with Hubot
+
+[Automation and Monitoring with Hubot](https://leanpub.com/automation-and-monitoring-with-hubot) will show you how to build advanced monitoring systems with Hubot PubSub.
+
 ## Possibilities
 
 `hubot-pubsub` allows you to build a simple, yet powerful monitoring / notification system using your corporate chat
