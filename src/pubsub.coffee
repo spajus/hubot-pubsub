@@ -73,7 +73,8 @@ module.exports = (robot) ->
 
   robot.respond /subscribe ([a-z0-9\-\.\:]+)$/i, (msg) ->
     ev = msg.match[1]
-    subscriptions(ev).push msg.message.user.room
+    room = msg.message.user.reply_to || msg.message.user.room
+    subscriptions(ev).push room
     persist subscriptions()
     msg.send "Subscribed #{msg.message.user.room} to #{ev} events"
 
@@ -81,20 +82,22 @@ module.exports = (robot) ->
     ev = msg.match[1]
     subs = subscriptions()
     subs[ev] ||= []
-    if msg.message.user.room in subs[ev]
-      index = subs[ev].indexOf msg.message.user.room
+    room = msg.message.user.reply_to || msg.message.user.room
+    if room in subs[ev]
+      index = subs[ev].indexOf room
       subs[ev].splice(index, 1)
       persist subs
       msg.send "Unsubscribed #{msg.message.user.room} from #{ev} events"
     else
-      msg.send "#{msg.message.user.room} was not subscribed to #{ev} events"
+      msg.send "#{room} was not subscribed to #{ev} events"
 
   robot.respond /unsubscribe all events$/i, (msg) ->
     count = 0
     subs = subscriptions()
+    room = msg.message.user.reply_to || msg.message.user.room
     for ev of subs
-      if msg.message.user.room in subs[ev]
-        index = subs[ev].indexOf msg.message.user.room
+      if room in subs[ev]
+        index = subs[ev].indexOf room
         subs[ev].splice(index, 1)
         count += 1
     persist subs
@@ -102,10 +105,11 @@ module.exports = (robot) ->
 
   robot.respond /subscriptions$/i, (msg) ->
     count = 0
+    room = msg.message.user.reply_to || msg.message.user.room
     for ev of subscriptions()
-      if msg.message.user.room in subscriptions(ev)
+      if room in subscriptions(ev)
         count += 1
-        msg.send "#{ev} -> #{msg.message.user.room}"
+        msg.send "#{ev} -> #{room}"
     msg.send "Total subscriptions for #{msg.message.user.room}: #{count}"
 
   robot.respond /all subscriptions$/i, (msg) ->
