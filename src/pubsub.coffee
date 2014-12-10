@@ -8,6 +8,7 @@
 #
 # Configuration:
 #   HUBOT_SUBSCRIPTIONS_PASSWORD (optional)
+#   HUBOT_PUBSUB_SEND_EVENT_NAME (optional, defaults true)
 #
 # Commands:
 #   hubot subscribe <event> - subscribes current room to event. To debug, subscribe to 'unsubscribed.event'
@@ -26,6 +27,10 @@
 #
 # Author:
 #   spajus
+
+
+Options =
+  sendEventName:  process.env.HUBOT_PUBSUB_SEND_EVENT_NAME == "true" or not process.env.HUBOT_PUBSUB_SEND_EVENT_NAME?
 
 module.exports = (robot) ->
 
@@ -58,7 +63,8 @@ module.exports = (robot) ->
         count += 1
         user = {}
         user.room = room
-        robot.send user, "#{event}: #{data}"
+        message = if Options.sendEventName then "#{event}: #{data}" else "#{data}"
+        robot.send user, message
     unless count > 0
       console.log "hubot-pubsub: unsubscribed.event: #{event}: #{data}"
       for room in subscriptions('unsubscribed.event')
@@ -142,4 +148,3 @@ module.exports = (robot) ->
     unless event or data
       console.log "Received incomplete pubsub:publish event. Event type: #{event}, data: #{data}"
     notify(event, data)
-
