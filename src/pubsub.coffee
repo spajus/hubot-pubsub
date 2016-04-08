@@ -84,7 +84,7 @@ module.exports = (robot) ->
     persist subscriptions()
     msg.send "Subscribed #{msg.message.user.room} to #{ev} events"
 
-  robot.respond /unsubscribe ([a-z0-9\-\.\:]+)$/i, (msg) ->
+  robot.respond /unsubscribe ([a-z0-9\-\.\:_]+)$/i, (msg) ->
     ev = msg.match[1]
     subs = subscriptions()
     subs[ev] ||= []
@@ -126,7 +126,7 @@ module.exports = (robot) ->
         msg.send "#{ev} -> #{room}"
     msg.send "Total subscriptions: #{count}"
 
-  robot.respond /publish ([a-z0-9\-\.\:]+) (.*)$/i, (msg) ->
+  robot.respond /publish ([a-z0-9\-\.\:_]+) (.*)$/i, (msg) ->
     ev = msg.match[1]
     data = msg.match[2]
     count = notify(ev, data)
