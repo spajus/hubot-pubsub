@@ -82,17 +82,17 @@ describe 'pubsub', ->
     say 'hubot subscribe foo.bar_baz'
 
   it 'cannot unsubscribe a room which was not subscribed', (done) ->
-    expectHubotToSay '#jasmine was not subscribed to foo.bar events', done
-    say 'hubot unsubscribe foo.bar'
+    expectHubotToSay '#jasmine was not subscribed to foo.bar_baz events', done
+    say 'hubot unsubscribe foo.bar_baz'
 
   it 'unsubscribes a room', (done) ->
-    robot.brain.data.subscriptions = 'foo.bar': [ '#jasmine' ]
+    robot.brain.data.subscriptions = 'foo.bar_baz': [ '#jasmine' ]
 
-    expectHubotToSay 'Unsubscribed #jasmine from foo.bar events', ->
-      (expect robot.brain.data.subscriptions['foo.bar']).toEqual [ ]
+    expectHubotToSay 'Unsubscribed #jasmine from foo.bar_baz events', ->
+      (expect robot.brain.data.subscriptions['foo.bar_baz']).toEqual [ ]
       done()
 
-    say 'hubot unsubscribe foo.bar'
+    say 'hubot unsubscribe foo.bar_baz'
 
   it 'allows subscribing all unsubscribed events for debugging', (done) ->
     robot.brain.data.subscriptions = 'unsubscribed.event': [ '#jasmine' ]
@@ -138,5 +138,3 @@ describe 'pubsub', ->
     captureHubotOutput captured, doneLatch
 
     robot.emit 'pubsub:publish', 'alien.event', 'hi from other script'
-
-
