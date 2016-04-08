@@ -30,7 +30,6 @@ describe 'pubsub', ->
 
       robot.adapter.on 'connected', ->
         process.env.HUBOT_AUTH_ADMIN = '1'
-        robot.loadFile (path.resolve path.join 'node_modules/hubot/src/scripts'), 'auth.coffee'
 
         (require '../src/pubsub')(robot)
 
@@ -76,11 +75,11 @@ describe 'pubsub', ->
     say 'hubot all subscriptions'
 
   it 'subscribes a room', (done) ->
-    expectHubotToSay 'Subscribed #jasmine to foo.bar events', ->
-      (expect robot.brain.data.subscriptions['foo.bar']).toEqual [ '#jasmine' ]
+    expectHubotToSay 'Subscribed #jasmine to foo.bar_baz events', ->
+      (expect robot.brain.data.subscriptions['foo.bar_baz']).toEqual [ '#jasmine' ]
       done()
 
-    say 'hubot subscribe foo.bar'
+    say 'hubot subscribe foo.bar_baz'
 
   it 'cannot unsubscribe a room which was not subscribed', (done) ->
     expectHubotToSay '#jasmine was not subscribed to foo.bar events', done

@@ -77,7 +77,7 @@ module.exports = (robot) ->
     robot.brain.data.subscriptions = subscriptions
     robot.brain.save()
 
-  robot.respond /subscribe ([a-z0-9\-\.\:]+)$/i, (msg) ->
+  robot.respond /subscribe ([a-z0-9\-\.\:_]+)$/i, (msg) ->
     ev = msg.match[1]
     room = msg.message.user.reply_to || msg.message.user.room
     subscriptions(ev).push room
