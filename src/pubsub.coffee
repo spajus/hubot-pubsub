@@ -70,7 +70,7 @@ module.exports = (robot) ->
         count += 1
         user = {}
         user.room = room
-        message = if Options.sendEventName then "#{event}: #{data}" else "#{data}"
+        message = messageFormatter(event, data)
         robot.send user, message
     unless count > 0
       console.log "hubot-pubsub: unsubscribed.event: #{event}: #{data}"
