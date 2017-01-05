@@ -30,7 +30,8 @@
 
 
 Options =
-  sendEventName:  process.env.HUBOT_PUBSUB_SEND_EVENT_NAME == "true" or not process.env.HUBOT_PUBSUB_SEND_EVENT_NAME?
+  sendEventName: process.env.HUBOT_PUBSUB_SEND_EVENT_NAME == "true" or not process.env.HUBOT_PUBSUB_SEND_EVENT_NAME?
+  dataAsJSon:    process.env.HUBOT_PUBSUB_DATA_AS_JSON    == "true" or     process.env.HUBOT_PUBSUB_DATA_AS_JSON?
 
 module.exports = (robot) ->
 
@@ -54,6 +55,12 @@ module.exports = (robot) ->
         subs[ev] ||= []
     else
       subs
+
+  messageFormatter = (event, data) ->
+    if Options.dataAsJSon
+      message = JSON.parse(data)
+    else
+      message = if Options.sendEventName then "#{event}: #{data}" else "#{data}"
 
   notify = (event, data) ->
     count = 0

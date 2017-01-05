@@ -59,6 +59,9 @@ Include package in Hubot's `external-scripts.json`:
 
     HUBOT_SUBSCRIPTIONS_PASSWORD   # Optional password for protecting HTTP API calls
     HUBOT_PUBSUB_SEND_EVENT_NAME   # Optional boolean determines whether the event name is prefixed on delivered messages (defaults to true)
+    HUBOT_PUBSUB_DATA_AS_JSON      # Optional boolean determines whether the event data is parsed as a JSON object 
+                                   # and sent as such (defaults to false)
+                                   # Useful to post to a Slack channel with rich formatting and attachments
 
 ## Commands
 
