@@ -3,6 +3,8 @@ hubot-pubsub
 
 PubSub notification system for [Hubot](https://github.com/github/hubot)
 
+Using [Lita](https://www.lita.io)? Try [lita-pubsub](https://github.com/spajus/lita-pubsub)!
+
 [![Build Status](https://travis-ci.org/spajus/hubot-pubsub.png?branch=master)](https://travis-ci.org/spajus/hubot-pubsub)
 
 ![hubot-pubsub demo](https://dl.dropboxusercontent.com/u/176100/opensource/hubot-pubsub.gif)
