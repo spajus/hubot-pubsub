@@ -84,12 +84,15 @@ module.exports = (robot) ->
     robot.brain.data.subscriptions = subscriptions
     robot.brain.save()
 
+  getRoomName = (robot, res) ->
+    robot.adapter.client.rtm.dataStore.getChannelGroupOrDMById(res.message.room).name
+
   robot.respond /subscribe ([a-z0-9\-\.\:_]+)$/i, (msg) ->
     ev = msg.match[1]
     room = msg.message.user.reply_to || msg.message.user.room
     subscriptions(ev).push room
     persist subscriptions()
-    msg.send "Subscribed #{msg.message.user.room} to #{ev} events"
+    msg.send "Subscribed \##{getRoomName(robot, msg)} to #{ev} events"
 
   robot.respond /unsubscribe ([a-z0-9\-\.\:_]+)$/i, (msg) ->
     ev = msg.match[1]
@@ -100,7 +103,7 @@ module.exports = (robot) ->
       index = subs[ev].indexOf room
       subs[ev].splice(index, 1)
       persist subs
-      msg.send "Unsubscribed #{msg.message.user.room} from #{ev} events"
+      msg.send "Unsubscribed \##{getRoomName(robot, msg)} from #{ev} events"
     else
       msg.send "#{room} was not subscribed to #{ev} events"
 
@@ -114,7 +117,7 @@ module.exports = (robot) ->
         subs[ev].splice(index, 1)
         count += 1
     persist subs
-    msg.send "Unsubscribed #{msg.message.user.room} from #{count} events"
+    msg.send "Unsubscribed \##{getRoomName(robot, msg)} from #{count} events"
 
   robot.respond /subscriptions$/i, (msg) ->
     count = 0
@@ -123,7 +126,7 @@ module.exports = (robot) ->
       if room in subscriptions(ev)
         count += 1
         msg.send "#{ev} -> #{room}"
-    msg.send "Total subscriptions for #{msg.message.user.room}: #{count}"
+    msg.send "Total subscriptions for \##{getRoomName(robot, msg)}: #{count}"
 
   robot.respond /all subscriptions$/i, (msg) ->
     count = 0
