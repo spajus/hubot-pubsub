@@ -85,7 +85,7 @@ module.exports = (robot) ->
     robot.brain.save()
 
   getRoomName = (robot, res) ->
-    if robot.adapter == "slack"
+    if robot.adapterName == "slack"
       robot.adapter.client.rtm.dataStore.getChannelGroupOrDMById(res.message.room).name
     else
       res.message.user.room
